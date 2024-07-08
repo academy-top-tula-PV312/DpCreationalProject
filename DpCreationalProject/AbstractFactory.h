@@ -62,10 +62,42 @@ public:
 
 
 
-class ArmyUniversalFactory
+class UnitUniversalFactory
 {
 	std::map<std::string, UnitFactory*> factories;
+
 public:
+	void AddFactory(std::string title, UnitFactory* factory)
+	{
+		factories[title] = factory;
+	}
+
+	void RemoveFactory(std::string title)
+	{
+		if (factories.contains(title))
+			factories.erase(title);
+	}
+
+	UnitFactory* GetFactory(std::string title)
+	{
+		if(factories.contains(title))
+			return factories[title];
+
+		return nullptr;
+	}
+
+	Unit* CreateUnit(std::string title)
+	{
+		if (factories.contains(title))
+			return factories[title]->Create();
+
+		return nullptr;
+	}
+};
+
+class ArmyUniversalFactory
+{
+	std::map<std::string, UnitUniversalFactory*> armyFactories;
 };
 
 
